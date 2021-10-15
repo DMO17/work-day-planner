@@ -69,3 +69,21 @@ textarea {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+
+.single-event-row-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+  border: solid 3px greenyellow;
+
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .single-event-row-container {
+    flex-direction: column;
+  }
+}
