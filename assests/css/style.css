@@ -76,7 +76,8 @@ textarea {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin-top: 40px;
+  margin: 40px 10px 0 10px;
+
   border: solid 3px greenyellow;
 
   font-size: 20px;

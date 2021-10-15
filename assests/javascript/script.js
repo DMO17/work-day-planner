@@ -3,39 +3,39 @@ const timeBlockContainer = $("#time-block-container");
 
 const timeBlockArray = [
   {
-    plannerTime: "9",
+    label: "9",
     key: 9,
   },
   {
-    plannerTime: "10",
+    label: "10",
     key: 10,
   },
   {
-    plannerTime: "11",
+    label: "11",
     key: 11,
   },
   {
-    plannerTime: "12",
+    label: "12",
     key: 12,
   },
   {
-    plannerTime: "13",
+    label: "13",
     key: 13,
   },
   {
-    plannerTime: "14",
+    label: "14",
     key: 14,
   },
   {
-    plannerTime: "15",
+    label: "15",
     key: 15,
   },
   {
-    plannerTime: "16",
+    label: "16",
     key: 16,
   },
   {
-    plannerTime: "17",
+    label: "17",
     key: 17,
   },
 ];
@@ -48,7 +48,7 @@ function constructTimeBlockSection() {
   function callback(each) {
     const htmlTimeBlockCode = `
     <div class="single-event-row-container">
-    <div   class="time-zone">${each.plannerTime}:00</div>
+    <div   class="time-zone">${each.label}:00</div>
     <div class="text-area">
       <textarea
         class="border border-dark"
@@ -59,7 +59,7 @@ function constructTimeBlockSection() {
       ></textarea>
     </div>
     <div>
-      <button type="button" class="btn btn-primary btn-lg" id="btn-${each.plannerTime}">
+      <button type="button" class="btn btn-primary btn-lg" id="btn-${each.label}">
         SAVE
       </button>
     </div>
@@ -79,12 +79,32 @@ function renderTimeBlock() {
   return timeBlockContainer.append(constructTimeBlockSection());
 }
 
+// initialize the local storage and get from local storage
+function InitializeLocalStorage() {
+  const planner = JSON.parse(localStorage.getItem("planner"));
+
+  if (planner === null) {
+    return localStorage.setItem("planner", JSON.stringify([]));
+  }
+}
+
+function getFromLocalStorage() {
+  const localStorageData = JSON.parse(localStorage.getItem("planner"));
+
+  return localStorageData === null ? JSON.stringify([]) : localStorageData;
+}
+
 function onReady() {
-  // get current day
-  //
-  //render current day
-  //
-  // render time block cards
+  //   // initialize the storage
+  InitializeLocalStorage();
+  //   // get from local storage
+
+  getFromLocalStorage();
+  //   // get current day
+
+  //   //render current day
+  //   //
+  //   // render time block cards
 
   renderTimeBlock();
 }
