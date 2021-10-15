@@ -111,8 +111,12 @@ function storeTextAreaInput(event) {
   if (target.is("button")) {
     const btnId = target.attr("id");
     const textAreaId = target.attr("id");
-    if (btnId == textAreaId) console.log(`1yesssss`);
-  } else console.log(`nope`);
+
+    if (btnId == textAreaId) {
+      let txt = dayPlannerTextArea.val();
+      console.log(txt);
+    }
+  }
 }
 
 timeBlockContainer.on("click", storeTextAreaInput);
