@@ -59,7 +59,7 @@ function constructDateTimeDiv() {
   return currentDayContainer.append(currentDay);
 }
 
-console.log(constructDateTimeDiv());
+const currentTime = { text: moment().format("h:00 A"), hour: moment().hour() };
 
 // construct the time block section dynamically
 
@@ -98,6 +98,23 @@ function renderTimeBlock() {
   return timeBlockContainer.append(constructTimeBlockSection());
 }
 
+// construct color coding blocks to represent past present and future
+
+function colorCodingBlocks() {
+  const hour = moment().hour();
+  // const timeText = $('.time-zone')
+  // console.log(timeText.text())
+
+  if (hour == timeBlockArray[8].label) {
+    //render blue block for present
+    console.log(`blue`, `present`);
+  } else if (hour > timeBlockArray[8].label) {
+    //render red block for past
+    console.log(`red`, `past`);
+  } else console.log(`future green`); //render future green block
+}
+
+colorCodingBlocks();
 // initialize the local storage and get from local storage
 
 function InitializeLocalStorage() {
@@ -164,5 +181,3 @@ function onReady() {
 }
 
 $(document).ready(onReady);
-
-console.log(moment().format("h:00 A"));
