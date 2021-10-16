@@ -83,6 +83,18 @@ textarea {
   font-size: 20px;
 }
 
+.present {
+  background-color: blue;
+}
+
+.past {
+  background-color: grey;
+}
+
+.future {
+  background-color: green;
+}
+
 @media only screen and (max-width: 768px) {
   .single-event-row-container {
     flex-direction: column;

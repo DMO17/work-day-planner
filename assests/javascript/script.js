@@ -49,6 +49,11 @@ const timeBlockArray = [
     key: 17,
     btnTextArea: "btnText17",
   },
+  {
+    label: "22",
+    key: 22,
+    btnTextArea: "btnText17",
+  },
 ];
 
 // construct date and time div on header
@@ -63,24 +68,40 @@ const currentTime = { text: moment().format("h:00 A"), hour: moment().hour() };
 
 // construct the time block section dynamically
 
+function getClassId(time) {
+  const hour = moment().hour();
+
+  // const timeText = $('.time-zone')
+  // console.log(timeText.text())
+
+  if (hour == time) {
+    return "present";
+  } else if (hour > time) {
+    //render red block for past
+    return "past";
+  } else return "future";
+}
+
 function constructTimeBlockSection() {
   // use mapping method to produce time blocks for the whole day
 
-  function callback(each) {
+  function callback(timeObj) {
     const htmlTimeBlockCode = `
-    <div class="single-event-row-container">
-    <div   class="time-zone">${each.label}</div>
+    <div class="single-event-row-container ${getClassId(timeObj.key)}" >
+    <div   class="time-zone">${timeObj.label}</div>
     <div class="text-area">
       <textarea
         class="border border-dark"
         name="plan-text-area"
-        id= '${each.btnTextArea}'
+        id= '${timeObj.btnTextArea}'
         cols="50"
         rows="3"
       ></textarea>
     </div>
     <div>
-      <button type="button" class="btn btn-primary btn-lg" id= '${each.btnTextArea}'>
+      <button type="button" class="btn btn-primary btn-lg" id= '${
+        timeObj.btnTextArea
+      }'>
         SAVE
       </button>
     </div>
@@ -101,20 +122,18 @@ function renderTimeBlock() {
 // construct color coding blocks to represent past present and future
 
 function colorCodingBlocks() {
-  const hour = moment().hour();
-  // const timeText = $('.time-zone')
-  // console.log(timeText.text())
-
-  if (hour == timeBlockArray[8].label) {
-    //render blue block for present
-    console.log(`blue`, `present`);
-  } else if (hour > timeBlockArray[8].label) {
-    //render red block for past
-    console.log(`red`, `past`);
-  } else console.log(`future green`); //render future green block
+  // const hour = moment().hour();
+  // // const timeText = $('.time-zone')
+  // // console.log(timeText.text())
+  // if (hour == timeBlockArray[8].label) {
+  //   //render blue block for present
+  //   console.log(`blue`, `present`);
+  // } else if (hour > timeBlockArray[8].label) {
+  //   //render red block for past
+  //   console.log(`red`, `past`);
+  // } else console.log(`future green`); //render future green block
 }
 
-colorCodingBlocks();
 // initialize the local storage and get from local storage
 
 function InitializeLocalStorage() {
@@ -165,19 +184,20 @@ timeBlockContainer.on("click", storeTextAreaInput);
 // when window loads
 
 function onReady() {
-  //   // initialize the storage
+  // initialize the storage
   InitializeLocalStorage();
-  //   // get from local storage
 
+  // get from local storage
   getFromLocalStorage();
 
-  //   //render current day
-
+  //render current day and time
   constructDateTimeDiv();
 
-  //   // render time block cards
-
+  // render time block cards
   renderTimeBlock();
+
+  // render color coded blocks
+  colorCodingBlocks();
 }
 
 $(document).ready(onReady);
