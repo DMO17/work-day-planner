@@ -1,5 +1,7 @@
 // Store Html DOM elements in a variable
 const timeBlockContainer = $("#time-block-container");
+const timeDateContainer = $("#currentDay");
+const currentDayContainer = $("#header-container");
 
 const timeBlockArray = [
   {
@@ -49,6 +51,16 @@ const timeBlockArray = [
   },
 ];
 
+// construct date and time div on header
+
+function constructDateTimeDiv() {
+  const timeDate = moment().format("MMMM Do YYYY, h:mm: a");
+  const currentDay = timeDateContainer.text(timeDate);
+  return currentDayContainer.append(currentDay);
+}
+
+console.log(constructDateTimeDiv());
+
 // construct the time block section dynamically
 
 function constructTimeBlockSection() {
@@ -57,7 +69,7 @@ function constructTimeBlockSection() {
   function callback(each) {
     const htmlTimeBlockCode = `
     <div class="single-event-row-container">
-    <div   class="time-zone">${each.label}:00</div>
+    <div   class="time-zone">${each.label}</div>
     <div class="text-area">
       <textarea
         class="border border-dark"
@@ -105,18 +117,30 @@ function getFromLocalStorage() {
 // save the text area message in local storage
 
 function storeTextAreaInput(event) {
+  const plannerLS = JSON.parse(localStorage.getItem("planner")) ?? [];
+
   const dayPlannerTextArea = $("textarea");
+
   const target = $(event.target);
 
-  if (target.is("button")) {
-    const btnId = target.attr("id");
-    const textAreaId = target.attr("id");
+  // if (target.is("button")) {
+  //   const btnId = target.attr("id");
+  //   const textAreaId = target.attr("id");
 
-    if (btnId == textAreaId) {
-      let txt = dayPlannerTextArea.val();
-      console.log(txt);
-    }
-  }
+  //   if (btnId == textAreaId) {
+  //     let txt = dayPlannerTextArea.val();
+
+  //     console.log(txt);
+
+  //     getFromLocalStorage().push(btnId, txt);
+
+  //     console.log(getFromLocalStorage());
+
+  //     const convertToLSData = JSON.stringify(getFromLocalStorage());
+
+  //     localStorage.setItem("planner", convertToLSData);
+  //   }
+  // }
 }
 
 timeBlockContainer.on("click", storeTextAreaInput);
@@ -129,13 +153,16 @@ function onReady() {
   //   // get from local storage
 
   getFromLocalStorage();
-  //   // get current day
 
   //   //render current day
-  //   //
+
+  constructDateTimeDiv();
+
   //   // render time block cards
 
   renderTimeBlock();
 }
 
 $(document).ready(onReady);
+
+console.log(moment().format("h:00 A"));
