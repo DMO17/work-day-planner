@@ -110,20 +110,25 @@ function constructTimeBlockSection() {
   return timeBlockArray.map(callback).join("");
 }
 
+/// ??????????????????? not working
 function saveTextAreaInput(timeNum) {
+  // console.log(timeNum);
   const localStorageValues = getFromLocalStorage();
 
-  function callback(each) {
-    if (timeNum === each.messageHour) {
-      console.log(each.hourlyMessage);
-    } else if (!localStorageValues.length) {
-      return console.log("");
-    } else console.log("");
-  }
-  return localStorageValues.forEach(callback);
-}
+  // console.log(localStorageValues);
 
-saveTextAreaInput(5);
+  const callback = function (each) {
+    // console.log(each);
+    if (timeNum === each.messageHour) {
+      return each.hourlyMessage;
+    } else {
+      return "empty";
+    }
+  };
+  const message = localStorageValues.find(callback);
+
+  return message?.hourlyMessage || "";
+}
 
 function renderTimeBlock() {
   return timeBlockContainer.append(constructTimeBlockSection());
