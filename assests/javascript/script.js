@@ -64,8 +64,6 @@ function constructDateTimeDiv() {
   return currentDayContainer.append(currentDay);
 }
 
-const currentTime = { text: moment().format("h:00 A"), hour: moment().hour() };
-
 // construct the time block section dynamically
 
 function getClassId(time) {
@@ -99,9 +97,9 @@ function constructTimeBlockSection() {
       ></textarea>
     </div>
     <div>
-      <button type="button" class="btn btn-primary btn-lg" id= '${
-        timeObj.btnTextArea
-      }'>
+      <button type="button" class="btn btn-primary btn-lg" data-time = "${
+        timeObj.key
+      }">
         SAVE
       </button>
     </div>
@@ -150,33 +148,29 @@ function getFromLocalStorage() {
   return localStorageData === null ? JSON.stringify([]) : localStorageData;
 }
 
-// save the text area message in local storage
-
 function storeTextAreaInput(event) {
-  const plannerLS = JSON.parse(localStorage.getItem("planner")) ?? [];
-
-  const dayPlannerTextArea = $("textarea");
-
   const target = $(event.target);
+  if (target.is("button")) {
+    // get the time and message from text area
+    const hour = target.data("time");
+    const message = target.parent().prev().children().val();
 
-  // if (target.is("button")) {
-  //   const btnId = target.attr("id");
-  //   const textAreaId = target.attr("id");
+    // store the time and message in a object
+    const timePlanObj = {
+      messageHour: hour,
+      hourlyMessage: message,
+    };
 
-  //   if (btnId == textAreaId) {
-  //     let txt = dayPlannerTextArea.val();
+    // get from local storage
 
-  //     console.log(txt);
+    const plannerDataFromLS = getFromLocalStorage();
 
-  //     getFromLocalStorage().push(btnId, txt);
+    plannerDataFromLS.push(timePlanObj);
 
-  //     console.log(getFromLocalStorage());
-
-  //     const convertToLSData = JSON.stringify(getFromLocalStorage());
-
-  //     localStorage.setItem("planner", convertToLSData);
-  //   }
-  // }
+    // set in LS
+    const convertToLSData = JSON.stringify(plannerDataFromLS);
+    localStorage.setItem("planner", convertToLSData);
+  }
 }
 
 timeBlockContainer.on("click", storeTextAreaInput);
