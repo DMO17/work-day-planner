@@ -49,11 +49,6 @@ const timeBlockArray = [
     key: 17,
     btnTextArea: "btnText17",
   },
-  {
-    label: "22",
-    key: 22,
-    btnTextArea: "btnText17",
-  },
 ];
 
 // construct date and time div on header
@@ -96,7 +91,7 @@ function constructTimeBlockSection() {
         id= '${timeObj.btnTextArea}'
         cols="50"
         rows="3"
-      > </textarea>
+      > ${saveTextAreaInput(timeObj.key)} </textarea>
     </div>
     <div>
       <button type="button" class="btn btn-primary btn-lg" data-time = "${
@@ -115,15 +110,20 @@ function constructTimeBlockSection() {
   return timeBlockArray.map(callback).join("");
 }
 
-function saveTextAreaInput() {
-  for (let each = 0; each < getFromLocalStorage().length; each++) {
-    if (timeBlockArray.key[each] == getFromLocalStorage()[each].messageHour) {
-      return getFromLocalStorage()[each].hourlyMessage;
-    } else return "empty";
+function saveTextAreaInput(timeNum) {
+  const localStorageValues = getFromLocalStorage();
+
+  function callback(each) {
+    if (timeNum === each.messageHour) {
+      console.log(each.hourlyMessage);
+    } else if (!localStorageValues.length) {
+      return console.log("");
+    } else console.log("");
   }
+  return localStorageValues.forEach(callback);
 }
 
-// console.log(saveTextAreaInput());
+saveTextAreaInput(5);
 
 function renderTimeBlock() {
   return timeBlockContainer.append(constructTimeBlockSection());
