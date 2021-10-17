@@ -95,6 +95,13 @@ textarea {
   background-color: green;
 }
 
+textarea {
+  height: 100px;
+  width: 98%;
+  padding: 1%;
+  border: none;
+}
+
 @media only screen and (max-width: 768px) {
   .single-event-row-container {
     flex-direction: column;
