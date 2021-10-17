@@ -66,6 +66,8 @@ function constructDateTimeDiv() {
 
 // construct the time block section dynamically
 
+// construct color coding blocks to represent past present and future
+
 function getClassId(time) {
   const hour = moment().hour();
 
@@ -94,7 +96,7 @@ function constructTimeBlockSection() {
         id= '${timeObj.btnTextArea}'
         cols="50"
         rows="3"
-      ></textarea>
+      > </textarea>
     </div>
     <div>
       <button type="button" class="btn btn-primary btn-lg" data-time = "${
@@ -113,23 +115,18 @@ function constructTimeBlockSection() {
   return timeBlockArray.map(callback).join("");
 }
 
-function renderTimeBlock() {
-  return timeBlockContainer.append(constructTimeBlockSection());
+function saveTextAreaInput() {
+  for (let each = 0; each < getFromLocalStorage().length; each++) {
+    if (timeBlockArray.key[each] == getFromLocalStorage()[each].messageHour) {
+      return getFromLocalStorage()[each].hourlyMessage;
+    } else return "empty";
+  }
 }
 
-// construct color coding blocks to represent past present and future
+// console.log(saveTextAreaInput());
 
-function colorCodingBlocks() {
-  // const hour = moment().hour();
-  // // const timeText = $('.time-zone')
-  // // console.log(timeText.text())
-  // if (hour == timeBlockArray[8].label) {
-  //   //render blue block for present
-  //   console.log(`blue`, `present`);
-  // } else if (hour > timeBlockArray[8].label) {
-  //   //render red block for past
-  //   console.log(`red`, `past`);
-  // } else console.log(`future green`); //render future green block
+function renderTimeBlock() {
+  return timeBlockContainer.append(constructTimeBlockSection());
 }
 
 // initialize the local storage and get from local storage
@@ -189,9 +186,6 @@ function onReady() {
 
   // render time block cards
   renderTimeBlock();
-
-  // render color coded blocks
-  colorCodingBlocks();
 }
 
 $(document).ready(onReady);
